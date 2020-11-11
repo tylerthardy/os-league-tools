@@ -14,17 +14,15 @@ export default function About() {
             <CardDeck>
                 <Card bg='dark' text='white' style={{ margin: '1rem' }} >
                     <h3 className="mt-2 light-text text-center">Features:</h3>
-                    <div className="text-center">
-                        <ul>
-                            <li>Plan your relic and area unlocks</li>
-                            <li>View, sort, and filter lists of tasks to decide what to do next</li>
-                            <li>Create a task to-do list</li>
-                            <li>Use calculators to plan your grind</li>
-                            <li>Filter and adjust calculators to your liking</li>
-                            <li>Integrate your personal league build with calculator settings</li>
-                            <li>Catch up on league-related news posts</li>
-                            <li>...and more coming soon!</li>
-                        </ul>
+                    <div className="d-flex flex-column text-center mb-2">
+                        <div>Plan your relic and area unlocks</div>
+                        <div>View, sort, and filter lists of tasks to decide what to do next</div>
+                        <div>Create a task to-do list</div>
+                        <div>Use calculators to plan your grind</div>
+                        <div>Filter and adjust calculators to your liking</div>
+                        <div>Integrate your personal league build with calculator settings</div>
+                        <div>Catch up on league-related news posts</div>
+                        <div>...and more coming soon!</div>
                     </div>
                 </Card>
                 <Card bg='dark' text='white' style={{ margin: '1rem' }} >
@@ -41,6 +39,9 @@ export default function About() {
                         </p>
                         <p>
                             You can also message me ingame (RSN: chaiinchomp) where I usually have private chat on.
+                        </p>
+                        <p>
+                            If you're enjoying the site and want to throw a few bucks my way in support, you can do so here: <a href="https://ko-fi.com/chaiinchomp">https://ko-fi.com/chaiinchomp</a> (but seriously, it's free, you don't have to).
                         </p>
                     </div>
                 </Card>

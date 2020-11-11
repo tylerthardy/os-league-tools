@@ -9,7 +9,7 @@ export default function UnlockProgressBar({ curValue, maxValue, steps }) {
     const screenSize = useScreenSize();
 
     let barHeight = 30, imgHeight = 40, imgIcon = RelicCheckImg, showEndIcons = true, marginClass = "mt-3 mb-3 mr-5 ml-5";
-    if (screenSize.isXs || screenSize.isSm) {
+    if (screenSize.isSizeOrSmaller('sm')) {
         barHeight = 20;
         imgHeight = 20;
         imgIcon = RelicNotchImg;
@@ -34,7 +34,7 @@ export default function UnlockProgressBar({ curValue, maxValue, steps }) {
         stepsToShow = steps.slice(1, steps.length-1);
     }
     const stepPercentages = stepsToShow.map(amount => (amount / maxValue) * 100);
-    const curPercentage = (curValue / maxValue) * 100;
+    const curPercentage = Math.min((curValue / maxValue) * 100, 100);
 
     return (
         <div className={marginClass}>

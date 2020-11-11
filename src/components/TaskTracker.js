@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Container, Row, Col, Tabs, Tab, Nav, Form, Button } from "react-bootstrap";
+import { Card, Row, Col, Tabs, Tab, Nav, Form, Button } from "react-bootstrap";
 import taskData from '../resources/taskData.json';
 import { getMaxCompletableTasks, isTaskComplete, isTaskOnTodoList, getTaskPointsOnTodoList, getCompletedTasksInArea, getCompletedTasksWithDifficulty, getPointsEarned, isTaskHidden, removeCompletedFromTodo } from "../util/task-util";
 import { getMaxCompletablePoints } from "../util/relic-util"
@@ -8,11 +8,15 @@ import { INITIAL_REGIONS_STATE } from '../util/region-util';
 import useLocalStorage from "../hooks/useLocalStorage";
 import { LOCALSTORAGE_KEYS } from "../util/browser-util";
 import { CardDeck } from "../../node_modules/react-bootstrap/esm/index";
+import useScreenSize from "../hooks/useScreenSize";
+import Divider from "./Divider";
 
 export default function TaskTracker({ taskStatus, updateTaskStatus, unlockedRegions = INITIAL_REGIONS_STATE }) {
     const [hideLockedAreas, setHideLockedAreas] = useLocalStorage(LOCALSTORAGE_KEYS.FILTER_HIDE_LOCKED_AREAS, true);
     const [selectedStatus, setSelectedStatus] = useLocalStorage(LOCALSTORAGE_KEYS.FILTER_SELECTED_STATUS, 'All');
     const [showHiddenTasks, setShowHiddenTasks] = useLocalStorage(LOCALSTORAGE_KEYS.FILTER_SHOW_HIDDEN_TASKS, false);
+    const [hideTodoTasks, setHideTodoTasks] = useLocalStorage(LOCALSTORAGE_KEYS.FILTER_HIDE_TODO_TASKS, false);
+    const screenSize = useScreenSize();
 
     const regionsToShow = [ 'Common', ...unlockedRegions ]
     const maxCompletableTasks = getMaxCompletableTasks(regionsToShow, taskStatus);
@@ -26,88 +30,66 @@ export default function TaskTracker({ taskStatus, updateTaskStatus, unlockedRegi
     return (
         <React.Fragment>
             <CardDeck>
-                <Card bg='dark' text='white' className="mt-3">
-                    <Container>
-                        <Row>
-                            <Col className="text-center">
-                                <h2 className="mt-3">
-                                    {`Tasks Completed: ${taskStatus.tasks.length
-                                        } / ${maxCompletableTasks.Total
-                                        } (${Math.round((taskStatus.tasks.length / maxCompletableTasks.Total) * 100)
-                                        }%)`}
-                                </h2>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="text-center">
-                                <ul style={{ listStyleType: 'none' }} >
-                                    {taskData.difficulties.map(difficultyJson => {
-                                        const numComplete = getCompletedTasksWithDifficulty(difficultyJson.value, taskStatus).length;
-                                        const totalTasks = maxCompletableTasks[difficultyJson.value];
-                                        const percentage = Math.round((numComplete / totalTasks) * 100);
-                                        return (
-                                            <li key={difficultyJson.value}>
-                                                {`${difficultyJson.label}: ${numComplete} / ${totalTasks} (${percentage}%)`}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </Col>
-                            <Col className="text-center">
-                                <ul style={{ listStyleType: 'none' }} >
-                                    {regionsToShow.map(region => {
-                                        const numComplete = getCompletedTasksInArea(region, taskStatus).length;
-                                        const totalTasks = maxCompletableTasks[region];
-                                        const percentage = Math.round((numComplete / totalTasks) * 100);
-                                        return (
-                                            <li key={region}>
-                                                {`${region}: ${numComplete} / ${totalTasks} (${percentage}%)`}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </Col>
-                        </Row>
-                    </Container>
+                <Card bg='dark' text='white' className="mt-3 p-2 text-center">
+                    <h2>
+                        {`Tasks Completed: ${taskStatus.tasks.length
+                            } / ${maxCompletableTasks.Total
+                            } (${Math.round((taskStatus.tasks.length / maxCompletableTasks.Total) * 100)
+                            }%)`}
+                    </h2>
+                    <div className="d-flex justify-content-around">
+                        <div className="d-flex flex-column">
+                            {taskData.difficulties.map(difficultyJson => {
+                                const numComplete = getCompletedTasksWithDifficulty(difficultyJson.value, taskStatus).length;
+                                const totalTasks = maxCompletableTasks[difficultyJson.value];
+                                return (
+                                    <div key={difficultyJson.value}>
+                                        {`${difficultyJson.label}: ${numComplete} / ${totalTasks}`}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="d-flex flex-column">
+                            {regionsToShow.map(region => {
+                                const numComplete = getCompletedTasksInArea(region, taskStatus).length;
+                                const totalTasks = maxCompletableTasks[region];
+                                return (
+                                    <div key={region}>
+                                        {`${region}: ${numComplete} / ${totalTasks}`}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </Card>
-                <Card bg='dark' text='white' className="mt-3">
-                    <Container>
-                        <Row>
-                            <Col className="text-center">
-                                <h2 className="mt-3">
-                                    {`Points Earned: ${getPointsEarned(taskStatus)} / ${maxCompletablePoints.Total}`}
-                                </h2>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="text-center">
-                                <ul style={{ listStyleType: 'none' }} >
-                                    {taskData.difficulties.map(difficultyJson => {
-                                        const numEarned = getPointsEarned(taskStatus, null, difficultyJson.value);
-                                        const totalPoints = maxCompletablePoints[difficultyJson.value];
-                                        return (
-                                            <li key={difficultyJson.value}>
-                                                {`${difficultyJson.label}: ${numEarned} / ${totalPoints}`}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </Col>
-                            <Col className="text-center">
-                                <ul style={{ listStyleType: 'none' }} >
-                                    {regionsToShow.map(region => {
-                                        const numEarned = getPointsEarned(taskStatus, region);
-                                        const totalPoints = maxCompletablePoints[region];
-                                        return (
-                                            <li key={region}>
-                                                {`${region}: ${numEarned} / ${totalPoints}`}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </Col>
-                        </Row>
-                    </Container>
+                <Card bg='dark' text='white' className="mt-3 p-2 text-center">
+                    <h2>
+                        {`Points Earned: ${getPointsEarned(taskStatus)} / ${maxCompletablePoints.Total}`}
+                    </h2>
+                    <div className="d-flex justify-content-around">
+                        <div className="d-flex flex-column">
+                            {taskData.difficulties.map(difficultyJson => {
+                                const numEarned = getPointsEarned(taskStatus, null, difficultyJson.value);
+                                const totalPoints = maxCompletablePoints[difficultyJson.value];
+                                return (
+                                    <div key={difficultyJson.value}>
+                                        {`${difficultyJson.label}: ${numEarned} / ${totalPoints}`}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="d-flex flex-column">
+                            {regionsToShow.map(region => {
+                                const numEarned = getPointsEarned(taskStatus, region);
+                                const totalPoints = maxCompletablePoints[region];
+                                return (
+                                    <div key={region}>
+                                        {`${region}: ${numEarned} / ${totalPoints}`}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </Card>
             </CardDeck>
             <Card bg='dark' text='white' className="mt-3">
@@ -117,12 +99,15 @@ export default function TaskTracker({ taskStatus, updateTaskStatus, unlockedRegi
                             taskStatus={taskStatus}
                             updateTaskStatus={updateTaskStatus}
                             unlockedRegions={regionsToShow}
+                            screenSize={screenSize}
                             selectedStatus={selectedStatus}
                             setSelectedStatus={setSelectedStatus}
                             hideLockedAreas={hideLockedAreas}
                             setHideLockedAreas={setHideLockedAreas}
                             showHiddenTasks={showHiddenTasks}
                             setShowHiddenTasks={setShowHiddenTasks}
+                            hideTodoTasks={hideTodoTasks}
+                            setHideTodoTasks={setHideTodoTasks}
                         />
                     </Tab>
                     <Tab eventKey="todo" title="To-Do List">
@@ -130,6 +115,7 @@ export default function TaskTracker({ taskStatus, updateTaskStatus, unlockedRegi
                             taskStatus={taskStatus}
                             updateTaskStatus={updateTaskStatus}
                             unlockedRegions={regionsToShow}
+                            screenSize={screenSize}
                             taskFilters={[todoListFilter]}
                             selectedStatus={selectedStatus}
                             setSelectedStatus={setSelectedStatus}
@@ -150,6 +136,7 @@ function TaskTableWrapper({
         taskStatus,
         updateTaskStatus,
         unlockedRegions,
+        screenSize,
         selectedStatus,
         setSelectedStatus,
         hideLockedAreas,
@@ -157,6 +144,8 @@ function TaskTableWrapper({
         plannedOnTodoList,
         showHiddenTasks,
         setShowHiddenTasks,
+        hideTodoTasks,
+        setHideTodoTasks,
         taskFilters = []
 }) {
     const [selectedArea, setSelectedArea] = useState('All');
@@ -177,12 +166,15 @@ function TaskTableWrapper({
     if (!showHiddenTasks) {
         allFilters.push((task) => !isTaskHidden(task.id, taskStatus));
     }
+    if (hideTodoTasks) {
+        allFilters.push((task) => !isTaskOnTodoList(task.id, taskStatus));
+    }
 
     return (
         <Card bg='dark' text='white' style={{ border: '2px solid #6c757d', borderRadius: '0rem 0rem .25rem .25rem' }}>
             <div className="m-3 text-center">
                 <Row>
-                    <Col sm={2}>
+                    <Col lg={2}>
                         <Tab.Container activeKey={selectedArea}>
                             <Form.Check
                                 label="Hide locked areas"
@@ -194,9 +186,21 @@ function TaskTableWrapper({
                                 checked={showHiddenTasks}
                                 onChange={() => setShowHiddenTasks(prevShowHidden => !prevShowHidden)}
                             />
-                            <div className="mt-2 mb-2" style={{borderTop: '0.5px solid', width: '100%'}} />
+                            { !plannedOnTodoList &&
+                                <React.Fragment>
+                                    <Form.Check
+                                        label="Hide to-do tasks"
+                                        checked={hideTodoTasks}
+                                        onChange={() => setHideTodoTasks((prevHideTodo) => !prevHideTodo)}
+                                    />
+                                </React.Fragment>
+                            }
+                            <Divider />
                             <h5>Areas:</h5>
-                            <Nav variant="pills" className="flex-column mt-3 tab-bar-secondary">
+                            <Nav
+                                variant="pills"
+                                className={"mt-3 tab-bar-secondary " + (screenSize.isSizeOrLarger('xl')  ? "flex-column" : "d-flex justify-content-around") }
+                            >
                                 <Nav.Item key='All'>
                                     <Nav.Link eventKey='All' onClick={event => setSelectedArea('All')}>All</Nav.Link>
                                 </Nav.Item>
@@ -214,12 +218,15 @@ function TaskTableWrapper({
                                     )
                                 }
                             </Nav>
-                            <div className="mt-2 mb-2" style={{borderTop: '0.5px solid', width: '100%'}} />
                         </Tab.Container>
 
                         <Tab.Container activeKey={selectedStatus}>
+                            <Divider />
                             <h5>Status:</h5>
-                            <Nav variant="pills" className="flex-column mt-3 tab-bar-secondary">
+                            <Nav
+                                variant="pills"
+                                className={"mt-3 mb-3 tab-bar-secondary " + (screenSize.isSizeOrLarger('lg')  ? "flex-column" : "d-flex justify-content-around") }
+                            >
                                 <Nav.Item key='All'>
                                     <Nav.Link eventKey='All' onClick={() => setSelectedStatus('All')}>All</Nav.Link>
                                 </Nav.Item>
@@ -233,24 +240,27 @@ function TaskTableWrapper({
                         </Tab.Container>
                     </Col>
 
-                    <Col sm={10}>
+                    <Col lg={10}>
                         {plannedOnTodoList &&
-                            <div className='d-flex justify-content-around align-items-center'>
-                                <h5 className="mb-3">
-                                    Incomplete Tasks on To-do List: {plannedOnTodoList.tasks}
-                                </h5>
-                                <h5 className="mb-3">
-                                    Points Remaining on To-do List: {plannedOnTodoList.points}
-                                </h5>
-                                <div className="mb-3">
-                                    <Button
-                                        variant="outline-light"
-                                        onClick={() => removeCompletedFromTodo(taskStatus, updateTaskStatus.setTodoListed)}
-                                    >
-                                        Remove completed tasks
-                                    </Button>
+                            <React.Fragment>
+                                {screenSize.isSizeOrSmaller('md') && <Divider />}
+                                <div className='d-flex justify-content-around align-items-center flex-wrap mb-2'>
+                                    <h5 className="mb-1 mt-1 mr-2">
+                                        Incomplete Tasks on To-do List: {plannedOnTodoList.tasks}
+                                    </h5>
+                                    <h5 className="mb-1 mt-1 mr-2">
+                                        Points Remaining on To-do List: {plannedOnTodoList.points}
+                                    </h5>
+                                    <div className="mb-1 mt-1">
+                                        <Button
+                                            variant="outline-light"
+                                            onClick={() => removeCompletedFromTodo(taskStatus, updateTaskStatus.setTodoListed)}
+                                        >
+                                            Remove completed tasks
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
+                            </React.Fragment>
                         }
                         <Nav>
                             <TaskTable
