@@ -7,6 +7,7 @@ import uncheckedIcon from '@iconify/icons-mdi/checkbox-blank-circle-outline';
 import closeIcon from '@iconify/icons-mdi/close';
 import plusIcon from '@iconify/icons-mdi/plus';
 import taskData from '../resources/taskData.json';
+import Calculators from "../pages/Calculators";
 
 export const DIFFICULTY_POINTS = {
     'Easy': 10,
@@ -24,6 +25,7 @@ export function getFormatters() {
         todoFormatter: todoFormatter,
         nameFormatter: nameFormatter,
         hideFormatter: hideFormatter,
+        skillsFormatter: skillsFormatter,
     }
 }
 
@@ -88,6 +90,49 @@ function todoFormatter(cell, row, rowIndex, props) {
 function hideFormatter(cell, row, rowIndex, props) {
     const isHidden = isTaskHidden(row.id, props.taskStatus);
     return <InlineIcon icon={isHidden ? plusIcon : closeIcon} height='20px' />
+}
+
+function skillsFormatter(cell, row, rowIndex, props) {
+    const playerSkills = {
+        "Attack": 81,        
+        "Strength": 79,        
+        "Defence": 89,        
+        "Ranged": 99,        
+        "Prayer": 76,        
+        "Magic": 88,        
+        "Runecrafting": 64,        
+        "Construction": 77,        
+        "Hitpoints": 99,        
+        "Agility": 74,        
+        "Herblore": 80,        
+        "Thieving": 66,        
+        "Crafting": 85,        
+        "Fletching": 87,        
+        "Slayer": 88,        
+        "Hunter": 87,        
+        "Mining": 77,        
+        "Smithing": 80,        
+        "Fishing": 94,        
+        "Cooking": 99,        
+        "Firemaking": 75,
+        "Woodcutting": 93,
+        "Farming": 70
+    };
+    const style = {
+        color: '#bcf782'
+    };
+    if (!cell) return null;
+    const requirements = cell.map(skill => {
+        return {
+            text: `${skill.level} ${skill.name}`,
+            met: playerSkills[skill.name] && playerSkills[skill.name] >= skill.level
+        };
+    });
+
+    if (requirements.filter(requirement => !requirement.met).length > 0) {
+        style.color = '#ff8080'
+    }
+    return <div style={style}>{requirements.map(requirement => requirement.text).join(', ')}</div>;
 }
 
 function pageButtonRenderer({ page, active, disable, title, onPageChange }) {
