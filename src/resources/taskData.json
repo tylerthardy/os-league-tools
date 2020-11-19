@@ -9849,9 +9849,8 @@
             "description": "Defeat a Fiyr Shade.",
             "difficulty": "Medium",
             "category": "Minigames",
-            "subcategory": "Shades of Mort\u00ef\u00bf\u00bdton",
-            "area": "Morytania",
-            "skills": []
+            "subcategory": "Shades of Mort'ton",
+            "area": "Morytania"
         },
         {
             "id": "773",
@@ -9914,7 +9913,7 @@
             "description": "Achieve 100% Sanctity during the Shades of Mort'ton minigame.",
             "difficulty": "Medium",
             "category": "Minigames",
-            "subcategory": "Shades of Mort\u00ef\u00bf\u00bdton",
+            "subcategory": "Shades of Mort'ton",
             "area": "Morytania"
         },
         {
@@ -11207,7 +11206,7 @@
             "description": "Defeat Zulrah at the Poison Waste in 0:42 or less.",
             "difficulty": "Master",
             "category": "Bossing",
-            "subcategory": "Gauntlet",
+            "subcategory": "Zulrah",
             "area": "Tirannwn"
         },
         {
@@ -21673,9 +21672,8 @@
                 "description": "Defeat a Fiyr Shade.",
                 "difficulty": "Medium",
                 "category": "Minigames",
-                "subcategory": "Shades of Mort\u00ef\u00bf\u00bdton",
-                "area": "Morytania",
-                "skills": []
+                "subcategory": "Shades of Mort'ton",
+                "area": "Morytania"
             },
             {
                 "id": "773",
@@ -21738,7 +21736,7 @@
                 "description": "Achieve 100% Sanctity during the Shades of Mort'ton minigame.",
                 "difficulty": "Medium",
                 "category": "Minigames",
-                "subcategory": "Shades of Mort\u00ef\u00bf\u00bdton",
+                "subcategory": "Shades of Mort'ton",
                 "area": "Morytania"
             },
             {
@@ -23033,7 +23031,7 @@
                 "description": "Defeat Zulrah at the Poison Waste in 0:42 or less.",
                 "difficulty": "Master",
                 "category": "Bossing",
-                "subcategory": "Gauntlet",
+                "subcategory": "Zulrah",
                 "area": "Tirannwn"
             },
             {
@@ -33487,9 +33485,8 @@
             "description": "Defeat a Fiyr Shade.",
             "difficulty": "Medium",
             "category": "Minigames",
-            "subcategory": "Shades of Mort\u00ef\u00bf\u00bdton",
-            "area": "Morytania",
-            "skills": []
+            "subcategory": "Shades of Mort'ton",
+            "area": "Morytania"
         },
         "773": {
             "id": "773",
@@ -33552,7 +33549,7 @@
             "description": "Achieve 100% Sanctity during the Shades of Mort'ton minigame.",
             "difficulty": "Medium",
             "category": "Minigames",
-            "subcategory": "Shades of Mort\u00ef\u00bf\u00bdton",
+            "subcategory": "Shades of Mort'ton",
             "area": "Morytania"
         },
         "780": {
@@ -34845,7 +34842,7 @@
             "description": "Defeat Zulrah at the Poison Waste in 0:42 or less.",
             "difficulty": "Master",
             "category": "Bossing",
-            "subcategory": "Gauntlet",
+            "subcategory": "Zulrah",
             "area": "Tirannwn"
         },
         "881": {
