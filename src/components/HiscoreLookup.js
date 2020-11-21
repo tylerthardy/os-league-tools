@@ -4,7 +4,7 @@ import { getCachedHiscores, getHiscores } from "../client/hiscores-client";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { LOCALSTORAGE_KEYS } from "../util/browser-util";
 
-export default function HiscoreLookup({ skill, setExpCallback, setTotalLvlCallback }) {
+export default function HiscoreLookup({ skill = null, setExpCallback, setTotalLvlCallback}) {
     const [username, setUsername] = useLocalStorage(LOCALSTORAGE_KEYS.USERNAME, "");
     const [errorText, setErrorText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -12,13 +12,13 @@ export default function HiscoreLookup({ skill, setExpCallback, setTotalLvlCallba
     useEffect(() => {
         const cachedHiscores = getCachedHiscores();
         if (cachedHiscores) {
-            setExpCallback(cachedHiscores.skills[skill].xp);
+            setExpCallback(skill ? cachedHiscores.skills[skill].xp : cachedHiscores.skills);
             setTotalLvlCallback(cachedHiscores.skills.overall.level);
         } else if (username) {
             setIsLoading(true);
             getHiscores(username).then(res => {
                 if (res.success) {
-                    setExpCallback(res.hiscores.skills[skill].xp);
+                    setExpCallback(skill ? res.hiscores.skills[skill].xp : res.hiscores.skills);
                     setTotalLvlCallback(res.hiscores.skills.overall.level);
                     setIsLoading(false);
                 } else {
@@ -37,7 +37,7 @@ export default function HiscoreLookup({ skill, setExpCallback, setTotalLvlCallba
         if (username) {
             getHiscores(username).then(res => {
                 if (res.success) {
-                    setExpCallback(res.hiscores.skills[skill].xp);
+                    setExpCallback(skill ? res.hiscores.skills[skill].xp : res.hiscores.skills);
                     setTotalLvlCallback(res.hiscores.skills.overall.level);
                     setIsLoading(false);
                 } else {
