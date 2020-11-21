@@ -1,0 +1,71 @@
+{
+    "attack": {
+        "icon": "https://oldschool.runescape.wiki/images/f/fe/Attack_icon.png"
+    },
+    "strength": {
+        "icon": "https://oldschool.runescape.wiki/images/1/1b/Strength_icon.png"
+    },
+    "defence": {
+        "icon": "https://oldschool.runescape.wiki/images/b/b7/Defence_icon.png"
+    },
+    "ranged": {
+        "icon": "https://oldschool.runescape.wiki/images/1/19/Ranged_icon.png"
+    },
+    "prayer": {
+        "icon": "https://oldschool.runescape.wiki/images/f/f2/Prayer_icon.png"
+    },
+    "magic": {
+        "icon": "https://oldschool.runescape.wiki/images/5/5c/Magic_icon.png"
+    },
+    "runecraft": {
+        "icon": "https://oldschool.runescape.wiki/images/6/63/Runecraft_icon.png"
+    },
+    "construction": {
+        "icon": "https://oldschool.runescape.wiki/images/f/f6/Construction_icon.png"
+    },
+    "hitpoints": {
+        "icon": "https://oldschool.runescape.wiki/images/9/96/Hitpoints_icon.png"
+    },
+    "agility": {
+        "icon": "https://oldschool.runescape.wiki/images/8/86/Agility_icon.png"
+    },
+    "herblore": {
+        "icon": "https://oldschool.runescape.wiki/images/0/03/Herblore_icon.png"
+    },
+    "thieving": {
+        "icon": "https://oldschool.runescape.wiki/images/4/4a/Thieving_icon.png"
+    },
+    "crafting": {
+        "icon": "https://oldschool.runescape.wiki/images/c/cf/Crafting_icon.png"
+    },
+    "fletching": {
+        "icon": "https://oldschool.runescape.wiki/images/9/93/Fletching_icon.png"
+    },
+    "slayer": {
+        "icon": "https://oldschool.runescape.wiki/images/2/28/Slayer_icon.png"
+    },
+    "hunter": {
+        "icon": "https://oldschool.runescape.wiki/images/d/dd/Hunter_icon.png"
+    },
+    "mining": {
+        "icon": "https://oldschool.runescape.wiki/images/4/4a/Mining_icon.png"
+    },
+    "smithing": {
+        "icon": "https://oldschool.runescape.wiki/images/d/dd/Smithing_icon.png"
+    },
+    "fishing": {
+        "icon": "https://oldschool.runescape.wiki/images/3/3b/Fishing_icon.png"
+    },
+    "cooking": {
+        "icon": "https://oldschool.runescape.wiki/images/d/dc/Cooking_icon.png"
+    },
+    "firemaking": {
+        "icon": "https://oldschool.runescape.wiki/images/9/9b/Firemaking_icon.png"
+    },
+    "woodcutting": {
+        "icon": "https://oldschool.runescape.wiki/images/f/f4/Woodcutting_icon.png"
+    },
+    "farming": {
+        "icon": "https://oldschool.runescape.wiki/images/f/fc/Farming_icon.png"
+    }
+}
