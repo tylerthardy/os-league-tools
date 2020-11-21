@@ -10,6 +10,7 @@ import { LOCALSTORAGE_KEYS } from "../util/browser-util";
 import { CardDeck } from "../../node_modules/react-bootstrap/esm/index";
 import useScreenSize from "../hooks/useScreenSize";
 import Divider from "./Divider";
+import HiscoreLookup from './HiscoreLookup';
 
 export default function TaskTracker({ taskStatus, updateTaskStatus, unlockedRegions = INITIAL_REGIONS_STATE }) {
     const [hideLockedAreas, setHideLockedAreas] = useLocalStorage(LOCALSTORAGE_KEYS.FILTER_HIDE_LOCKED_AREAS, true);
@@ -176,6 +177,14 @@ function TaskTableWrapper({
                 <Row>
                     <Col lg={2}>
                         <Tab.Container activeKey={selectedArea}>
+                            <HiscoreLookup
+                                setExpCallback={(newExp) => {
+                                    console.log(newExp);
+                                }}
+                                setTotalLvlCallback={(totalLevel) => {
+                                    console.log(totalLevel);
+                                }}
+                            />
                             <Form.Check
                                 label="Hide locked areas"
                                 checked={hideLockedAreas}

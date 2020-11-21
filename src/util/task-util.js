@@ -93,46 +93,25 @@ function hideFormatter(cell, row, rowIndex, props) {
     return <InlineIcon icon={isHidden ? plusIcon : closeIcon} height='20px' />
 }
 
-const playerSkills = {
-    "attack": 89,
-    "strength": 84,
-    "defence": 89,
-    "ranged": 99,
-    "prayer": 79,
-    "magic": 89,
-    "runecraft": 64,
-    "construction": 77,
-    "hitpoints": 99,
-    "agility": 75,
-    "herblore": 82,
-    "thieving": 66,
-    "crafting": 86,
-    "fletching": 88,
-    "slayer": 89,
-    "hunter": 87,
-    "mining": 79,
-    "smithing": 82,
-    "fishing": 94,
-    "cooking": 99,
-    "firemaking": 75,
-    "woodcutting": 93,
-    "farming": 70
-};
 function skillsFormatter(cell, row, rowIndex, props) {
-    const skillIcon = {
-        "width": "20px"
-    };
     if (!cell) return null;
+    const playerSkills = props.playerSkills;
     const requirements = cell.map(skill => {
         const name = skill.name.toLowerCase();
         return {
             level: skill.level,
-            met: playerSkills[name] && playerSkills[name] >= skill.level,
+            met: playerSkills ? playerSkills[name] && playerSkills[name].level >= skill.level : null,
             icon: skillData[name]?.icon
         };
     });
+    const skillIcon = {
+        "width": "20px"
+    };
+
     return requirements.map(requirement =>
-        (<Badge pill variant={requirement.met ? "primary" : "danger"}><img src={requirement.icon} style={skillIcon} alt=''/> {requirement.level}</Badge>));
+        (<Badge pill variant={playerSkills ? (requirement.met ? "primary" : "danger") : "light"}>
+                <img src={requirement.icon} style={skillIcon} alt=''/> {requirement.level}
+        </Badge>));
 }
 
 function pageButtonRenderer({ page, active, disable, title, onPageChange }) {

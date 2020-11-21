@@ -5,9 +5,13 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import taskData from '../resources/taskData.json';
 import DoubleScrollbar from "../components/DoubleScrollbar";
 import { applyFilters, getFormatters, getRenderers, isTaskComplete, isTaskHidden, isTaskOnTodoList } from "../util/task-util";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { SESSIONSTORAGE_KEYS } from "../util/browser-util";
 
 export default function TaskTable({ area, taskStatus, updateTaskStatus, taskFilters }) {
     const { completedFormatter, pointsFormatter, todoFormatter, nameFormatter, hideFormatter, difficultyFormatter, skillsFormatter } = getFormatters();
+
+    const [playerSkills] = useLocalStorage(SESSIONSTORAGE_KEYS.HISCORES_CACHE, null, true);
 
     const taskTableContent = area === "All" ? taskData.tasks : taskData.tasksByRegion[area];
 
@@ -96,6 +100,7 @@ export default function TaskTable({ area, taskStatus, updateTaskStatus, taskFilt
             "dataField": "skills",
             "text": "Skills",
             "formatter": skillsFormatter,
+            "formatExtraData": { "playerSkills": playerSkills?.skills },
             "headerStyle": { width: '10rem' },
             "sort": true
         },
